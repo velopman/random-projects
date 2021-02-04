@@ -1,0 +1,52 @@
+extends Area2D
+
+export var follow_length = 30.0
+export var follow_buffer = 5.0
+
+var target = null
+var speed = 50.0
+
+
+func _process(delta):
+	if self.target:
+		self.__follow_target(delta)
+
+
+func _on_body_entered(body):
+	if body is player:
+		print("player")
+		
+		self.target = body.get_last_follower()
+		body.set_last_follower(self)
+		
+		self.collision_mask = 4
+	
+	if body is dweller:
+		self.__handle_dweller_collision(body)
+	
+
+func __follow_target(delta) -> void:
+	var direction_delta: Vector2 = self.target.position - self.position
+	var follow_offset = direction_delta.normalized() * -follow_length
+	
+	if direction_delta.length() < self.follow_length + self.follow_buffer:
+		return
+	
+	self.position = self.position.move_toward(
+		self.target.position + follow_offset, 
+		self.speed * delta
+	)
+
+func __handle_dweller_collision(dweller):
+	var next = self.target
+	while next.has_method("__handle_dweller_collision"):
+		next = next.target
+	
+	var last = next.get_last_follower()
+	next.set_last_follower(self.target)
+	
+	self.target = dweller
+	
+	while last != self:
+		last.collision_mask = 1
+	self.collision_mask = 1

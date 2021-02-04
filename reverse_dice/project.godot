@@ -1,0 +1,57 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Resource",
+"class": "Ability",
+"language": "GDScript",
+"path": "res://source/scripts/ability.gd"
+}, {
+"base": "Node",
+"class": "ability_state",
+"language": "GDScript",
+"path": "res://source/scripts/ability_state.gd"
+}, {
+"base": "Node",
+"class": "dice_state",
+"language": "GDScript",
+"path": "res://source/scripts/dice_state.gd"
+}, {
+"base": "turn_controller",
+"class": "player_turn_controller",
+"language": "GDScript",
+"path": "res://source/scripts/player_turn_controller.gd"
+}, {
+"base": "Reference",
+"class": "turn_controller",
+"language": "GDScript",
+"path": "res://source/scripts/turn_controller.gd"
+} ]
+_global_script_class_icons={
+"Ability": "",
+"ability_state": "",
+"dice_state": "",
+"player_turn_controller": "",
+"turn_controller": ""
+}
+
+[application]
+
+config/name="20201126_reverse_dice"
+run/main_scene="res://source/scenes/main.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+event="*res://source/scripts/event.gd"
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
